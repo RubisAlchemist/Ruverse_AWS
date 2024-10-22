@@ -4,16 +4,16 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 const initialState = {
   audio: {
     sonny: {
-      defaultSrc: "https://ruverse-snu.com/video/default_sonny.mp4",
-      greetingsSrc: "https://ruverse-snu.com/video/greetings_sonny.webm",
-      errorSrc: "https://ruverse-snu.com/video/pardon_sonny.webm",
-      noteSrc: "https://ruverse-snu.com/video/note_sonny.mp4",
+      defaultSrc: "https://ruverse-test.com/video/default_sonny.mp4",
+      greetingsSrc: "https://ruverse-test.com/video/greetings_sonny.webm",
+      errorSrc: "https://ruverse-test.com/video/pardon_sonny.webm",
+      noteSrc: "https://ruverse-test.com/video/note_sonny.mp4",
     },
     jennie: {
-      defaultSrc: "https://ruverse-snu.com/video/default_jennie.mp4",
-      greetingsSrc: "https://ruverse-snu.com/video/greetings_jennie.webm",
-      errorSrc: "https://ruverse-snu.com/video/pardon_jennie.webm",
-      noteSrc: "https://ruverse-snu.com/video/note_jennie.mp4",
+      defaultSrc: "https://ruverse-test.com/video/default_jennie.mp4",
+      greetingsSrc: "https://ruverse-test.com/video/greetings_jennie.webm",
+      errorSrc: "https://ruverse-test.com/video/pardon_jennie.webm",
+      noteSrc: "https://ruverse-test.com/video/note_jennie.mp4",
     },
     isNotePlaying: false,
     isGreetingsPlaying: true,

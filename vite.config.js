@@ -14,20 +14,18 @@ export default defineConfig({
     // }),
   ],
 
-  // https://server.snuruverse.com/proxy/video/${urlPart}
-  // vercel : https://server.snuruverse.com/video/${urlPart} 로 프록시
-  // s3 : https://server.snuruverse.com/proxy/video/${urlPart}
-
   server: {
     proxy: {
+      host: "0.0.0.0",
+      // 프록시 우회 안 하게 되면 아래주석처리
       "/video": {
-        target: "https://ruverse-snu.com",
+        target: "https://ruverse-test.com",
         changeOrigin: true,
         secure: false,
         rewrite: (path) => path.replace(/^\/video/, "/video"),
       },
       "/proxy/video": {
-        target: "https://ruverse-snu.com",
+        target: "https://ruverse-test.com",
         changeOrigin: true,
         secure: false,
         rewrite: (path) => path.replace(/^\/proxy\/video/, "/video"),

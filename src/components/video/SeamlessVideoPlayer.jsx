@@ -31,7 +31,9 @@ const SeamlessVideoPlayer = ({
         .split("/video/")[1]
         .split(/(_\d+)?\.webm$/)[0];
       //baseUrl.current = `/video/${urlPart}`;
-      baseUrl.current = `/proxy/video/${urlPart}`;
+      baseUrl.current = `/proxy/video/${urlPart}`; // 기존 코드
+      //baseUrl.current = `https://ruverse-test.com/video/${urlPart}`; // 프록시 우회 없이
+
       initialUrlSet.current = true;
     }
     console.log("seamlessVideoPlayer: ", initialVideoUrl.videoPath);

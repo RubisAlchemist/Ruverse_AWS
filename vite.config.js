@@ -15,8 +15,8 @@ export default defineConfig({
   ],
 
   server: {
+    host: "0.0.0.0",
     proxy: {
-      host: "0.0.0.0",
       // 프록시 우회 안 하게 되면 아래주석처리
       "/video": {
         target: "https://ruverse-test.com",

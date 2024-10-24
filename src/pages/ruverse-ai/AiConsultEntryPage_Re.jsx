@@ -29,7 +29,7 @@ import withReactContent from "sweetalert2-react-content";
 
 const MySwal = withReactContent(Swal);
 
-const AiConsultEntryPage = () => {
+const AiConsultEntryPageRe = () => {
   const dispatch = useDispatch();
   const [selectedAvatar, setSelectedAvatar] = useState(null);
   // const [uname, setUname] = useState({
@@ -280,4 +280,4 @@ const Container = styled.div`
   flex-direction: column;
 `;
 
-export default AiConsultEntryPage;
+export default AiConsultEntryPageRe;

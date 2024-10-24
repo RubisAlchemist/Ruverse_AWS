@@ -10,6 +10,8 @@ import {
   AvatarChoosePage,
   SeamlessVideoStreamer,
   SeamlessVideoPlayer,
+  AiConsultEntryPageRe
+  
 } from "@pages/index.js";
 
 import { BrowserRouter, Route, Routes } from "react-router-dom";
@@ -29,6 +31,7 @@ function App() {
         <Route path="/ai-consult/:uname" element={<AiConsultChannelPage />} />
         <Route path="/klleonAvatar" element={<KlleonAvatar />} />
         <Route path="/AvatarChoosePage" element={<AvatarChoosePage />} />
+        <Route path="/ai-consultEntryRe" element={<AiConsultEntryPageRe />} />
       </Routes>
     </BrowserRouter>
   );

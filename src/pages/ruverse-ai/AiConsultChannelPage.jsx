@@ -19,7 +19,7 @@
 // import Describe1Image from "@assets/images/describe1.png";
 // import Describe2Image from "@assets/images/describe2.png";
 // import BackgroundImage_sonny from "@assets/images/background_sonny.png";
-// import BackgroundImage_jennie from "@assets/images/background_jennie.png";
+// import BackgroundImage_karina from "@assets/images/background_karina.png";
 
 // const useQuery = () => {
 //   return new URLSearchParams(useLocation().search);
@@ -67,8 +67,8 @@
 //   let BackgroundImage;
 //   if (selectedAvatar === "sonny") {
 //     BackgroundImage = BackgroundImage_sonny;
-//   } else if (selectedAvatar === "jennie") {
-//     BackgroundImage = BackgroundImage_jennie;
+//   } else if (selectedAvatar === "karina") {
+//     BackgroundImage = BackgroundImage_karina;
 //   } else {
 //     BackgroundImage = BackgroundImage_sonny;
 //   }
@@ -487,7 +487,7 @@
 // import Describe1Image from "@assets/images/describe1.png";
 // import Describe2Image from "@assets/images/describe2.png";
 // import BackgroundImage_sonny from "@assets/images/background_sonny.png";
-// import BackgroundImage_jennie from "@assets/images/background_jennie.png";
+// import BackgroundImage_karina from "@assets/images/background_karina.png";
 
 // // SweetAlert2 임포트
 // import Swal from "sweetalert2";
@@ -541,8 +541,8 @@
 //   let BackgroundImage;
 //   if (selectedAvatar === "sonny") {
 //     BackgroundImage = BackgroundImage_sonny;
-//   } else if (selectedAvatar === "jennie") {
-//     BackgroundImage = BackgroundImage_jennie;
+//   } else if (selectedAvatar === "karina") {
+//     BackgroundImage = BackgroundImage_karina;
 //   } else {
 //     BackgroundImage = BackgroundImage_sonny;
 //   }
@@ -961,7 +961,7 @@
 
 // export default AiConsultChannelPage;
 
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import React, { useState, useEffect, useLayoutEffect, useRef, useCallback } from "react";
 import {
   AudioRecorder,
   LocalUser,
@@ -982,7 +982,7 @@ import Exit from "@assets/images/exit.png";
 import Describe1Image from "@assets/images/describe1.png";
 import Describe2Image from "@assets/images/describe2.png";
 import BackgroundImage_sonny from "@assets/images/background_sonny.png";
-import BackgroundImage_jennie from "@assets/images/background_jennie.png";
+import BackgroundImage_karina from "@assets/images/background_karina.png";
 
 // SweetAlert2 임포트
 import Swal from "sweetalert2";
@@ -1036,8 +1036,8 @@ const AiConsultChannelPage = () => {
   let BackgroundImage;
   if (selectedAvatar === "sonny") {
     BackgroundImage = BackgroundImage_sonny;
-  } else if (selectedAvatar === "jennie") {
-    BackgroundImage = BackgroundImage_jennie;
+  } else if (selectedAvatar === "karina") {
+    BackgroundImage = BackgroundImage_karina;
   } else {
     BackgroundImage = BackgroundImage_sonny;
   }
@@ -1242,7 +1242,9 @@ const AiConsultChannelPage = () => {
 
     const handlePopState = (event) => {
       // preventPop이 true인 경우, 사용자에게 확인 팝업을 표시
-      if (event.state && event.state.preventPop) {
+      console.log(event.state);
+      console.log(event.state.preventPop);
+      if (event.state || event.state.preventPop) {
         // SweetAlert2를 사용한 팝업 표시
         MySwal.fire({
           title: "알림",

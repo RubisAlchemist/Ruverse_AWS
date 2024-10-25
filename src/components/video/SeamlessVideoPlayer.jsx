@@ -31,9 +31,7 @@ const SeamlessVideoPlayer = ({
         .split("/video/")[1]
         .split(/(_\d+)?\.webm$/)[0];
       //baseUrl.current = `/video/${urlPart}`;
-      baseUrl.current = `/proxy/video/${urlPart}`; // 기존 코드
-      //baseUrl.current = `https://ruverse-test.com/video/${urlPart}`; // 프록시 우회 없이
-
+      baseUrl.current = `/proxy/video/${urlPart}`;
       initialUrlSet.current = true;
     }
     console.log("seamlessVideoPlayer: ", initialVideoUrl.videoPath);
@@ -52,19 +50,19 @@ const SeamlessVideoPlayer = ({
     if (fetchInProgress.current[index]) return; // Avoid overlapping fetches
     fetchInProgress.current[index] = true;
 
-    if (index === 0) {
-      console.log("sleeping...");
-      await sleep(2000);
-      console.log("sleep end");
-      setIsInitialLoading(false);
-    }
+    // if (index === 0) {
+    //   console.log("sleeping...");
+    //   await sleep(2000);
+    //   console.log("sleep end");
+    //   setIsInitialLoading(false);
+    // }
 
     const url = getVideoUrl(index);
     console.log(url);
     const mediaSource = mediaSourceRef.current;
     retryCounts.current[index] = 0;
 
-    const MAX_RETRIES_BEFORE_FINAL_CHECK = 5;
+    const MAX_RETRIES_BEFORE_FINAL_CHECK = 3;
 
     while (!isStopped.current) {
       try {

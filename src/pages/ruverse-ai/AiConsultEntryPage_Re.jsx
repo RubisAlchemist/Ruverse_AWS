@@ -22,13 +22,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { uploadNewSessionRequest } from "@store/ai/aiConsultSlice";
 import styled from "styled-components";
 // import avatarJungkook from "@assets/images/avatar_jungkook.png";
-
 // SweetAlert2 임포트
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
-
 const MySwal = withReactContent(Swal);
-
 const AiConsultEntryPageRe = () => {
   const dispatch = useDispatch();
   const [selectedAvatar, setSelectedAvatar] = useState(null);
@@ -47,38 +44,30 @@ const AiConsultEntryPageRe = () => {
   console.log(uname);
   console.log(phoneNumber);
   const [isButtonEnabled, setIsButtonEnabled] = useState(false);
-
   const handleAvatarClick = (avatar) => {
     setSelectedAvatar((prev) => (prev === avatar ? null : avatar));
   };
-
   const navigate = useNavigate();
-
   const onChangeUname = (e) => {
     const value = e.target.value;
     const regex = /^[A-Za-z0-9ㄱ-ㅎㅏ-ㅣ가-힣]+$/;
     const valid = regex.test(value);
-
     setUname({
       value,
       error: !valid && value !== "",
     });
   };
-
   const onChangePhoneNumber = (e) => {
     const value = e.target.value;
     const isValid = /^[0-9]{11}$/.test(value);
-
     setPhoneNumber({
       value,
       error: value !== "" && !isValid,
     });
   };
-
-  const onClickStart = () => {
+  const onClickStart = async () => {
     let unameToUse = uname;
-
-    const containsKorean = /[ㄱ-ㅎㅏ-ㅣ가-힣]/.test(uname.value);
+    const containsKorean = /[ㄱ-ㅎㅏ-ㅣ가-힣]/.test(uname);
     if (containsKorean) {
       unameToUse = convert(uname).replace(/\s+/g, "");
     }
@@ -91,32 +80,25 @@ const AiConsultEntryPageRe = () => {
       selectedAvatar
     );
     const formData = new FormData();
-
     formData.append("uname", unameToUse);
-    formData.append("phoneNumber", phoneNumber.value);
+    formData.append("phoneNumber", phoneNumber);
     formData.append("selectedAvatar", selectedAvatar);
-
-    dispatch(uploadNewSessionRequest(formData));
-
+    await dispatch(uploadNewSessionRequest(formData));
     navigate(
       `/ai-consult/${unameToUse}?phoneNumber=${phoneNumber}&selectedAvatar=${selectedAvatar}`
     );
   };
-
   // useEffect(() => {
   //   window.location.reload();
   // }, []);
-
   // 뒤로 가기 막기
   useEffect(() => {
     // Replace the initial history state
     if (!window.history.state) {
       window.history.replaceState({ preventPop: true }, "");
     }
-  
     // Push an additional state to the history stack
     window.history.pushState({ preventPop: true }, "");
-  
     const handlePopState = (event) => {
       // Always prevent back navigation and show the popup
       MySwal.fire({
@@ -130,22 +112,17 @@ const AiConsultEntryPageRe = () => {
         window.history.pushState({ preventPop: true }, "");
       });
     };
-  
     window.addEventListener("popstate", handlePopState);
-  
     return () => {
       window.removeEventListener("popstate", handlePopState);
     };
   }, []);
-
   useEffect(() => {
     const isNameValid = uname.value !== "" && !uname.error;
     const isPhoneValid = phoneNumber.value !== "" && !phoneNumber.error;
     const isAvatarSelected = selectedAvatar !== null;
-
     setIsButtonEnabled(isNameValid && isPhoneValid && isAvatarSelected);
   }, [uname, phoneNumber, selectedAvatar]);
-
   return (
     <Container>
       <Header />
@@ -182,7 +159,6 @@ const AiConsultEntryPageRe = () => {
                 mb: 2,
               }}
             />
-
             <TextField
               required
               error={phoneNumber.error}
@@ -207,7 +183,6 @@ const AiConsultEntryPageRe = () => {
               }}
             />
           </Box> */}
-
           <Box display="flex" justifyContent="center" gap={4}>
             {[
               { name: "sonny", src: avatarSonny },
@@ -241,7 +216,6 @@ const AiConsultEntryPageRe = () => {
               </Box>
             ))}
           </Box>
-
           <Box display="flex" justifyContent="center">
             <Button
               onClick={onClickStart}
@@ -249,13 +223,13 @@ const AiConsultEntryPageRe = () => {
               variant="contained"
               sx={{
                 fontFamily: "SUIT Variable",
-                backgroundColor: "#1976d2",
+                backgroundColor: "#1976D2",
                 color: "white",
                 borderRadius: "25px",
                 boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.1)",
                 transition: "transform 0.3s ease-in-out, background-color 0.3s",
                 "&:hover": {
-                  backgroundColor: "#1565c0",
+                  backgroundColor: "#1565C0",
                   transform: "scale(1.03)",
                 },
                 padding: { xs: "6px 14px", sm: "8px 16px", md: "10px 20px" },
@@ -271,7 +245,6 @@ const AiConsultEntryPageRe = () => {
     </Container>
   );
 };
-
 const Container = styled.div`
   display: flex;
   //background-color: yellow;
@@ -279,5 +252,4 @@ const Container = styled.div`
   height: 100vh;
   flex-direction: column;
 `;
-
 export default AiConsultEntryPageRe;

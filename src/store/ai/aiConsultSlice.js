@@ -1,6 +1,5 @@
 import { ruverseClient } from "@apis/ruverse";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-
 const initialState = {
   audio: {
     sonny: {
@@ -8,12 +7,14 @@ const initialState = {
       greetingsSrc: "https://ruverse-test.com/video/greetings_sonny.webm",
       errorSrc: "https://ruverse-test.com/video/pardon_sonny.webm",
       noteSrc: "https://ruverse-test.com/video/note_sonny.mp4",
+      existingSrc: "https://ruverse-test.com/video/regreetings_sonny.webm",
     },
     karina: {
       defaultSrc: "https://ruverse-test.com/video/default_karina.mp4",
       greetingsSrc: "https://ruverse-test.com/video/greetings_karina.webm",
       errorSrc: "https://ruverse-test.com/video/pardon_karina.webm",
       noteSrc: "https://ruverse-test.com/video/note_karina.mp4",
+      existingSrc: "https://ruverse-test.com/video/regreetings_karina.webm",
     },
     isNotePlaying: false,
     isGreetingsPlaying: true,
@@ -30,8 +31,8 @@ const initialState = {
     open: false,
     message: null,
   },
+  sessionStatus: null,
 };
-
 export const uploadKlleonRequest = createAsyncThunk(
   "asyncThunk/uploadAudioRequest",
   async (audioForm) => {
@@ -45,11 +46,9 @@ export const uploadKlleonRequest = createAsyncThunk(
       }
     );
     const data = response.data;
-
     return data;
   }
 );
-
 export const uploadNewSessionRequest = createAsyncThunk(
   "uploadNewSession", // Type string
   async (formData, { rejectWithValue }) => {
@@ -72,7 +71,6 @@ export const uploadNewSessionRequest = createAsyncThunk(
     }
   }
 );
-
 export const uploadRequest = createAsyncThunk(
   "asyncThunk/uploadAudioRequest",
   async (audioForm) => {
@@ -91,7 +89,6 @@ export const uploadRequest = createAsyncThunk(
     return data;
   }
 );
-
 export const aiConsultSlice = createSlice({
   name: "aiConsultSlice",
   initialState,
@@ -126,7 +123,6 @@ export const aiConsultSlice = createSlice({
       state.audio.upload.isLoading = false;
       state.audio.upload.isError = false;
       state.audio.upload.error = null;
-
       state.audio.current += 1;
       state.audio.src = action.payload;
       state.modal.open = true;
@@ -137,13 +133,28 @@ export const aiConsultSlice = createSlice({
       state.audio.upload.isLoading = false;
       state.audio.upload.isError = true;
       state.audio.upload.error = action.error.message;
-      state.audio.src = "error"; // 📌 src를 'error'로 설정
+      state.audio.src = "error"; // :압정: src를 'error'로 설정
       state.modal.message = "요청 실패";
       state.modal.open = true;
     });
+    // uploadNewSessionRequest 관련 리듀서 추가
+    builder.addCase(uploadNewSessionRequest.pending, (state) => {
+      state.audio.upload.isLoading = true;
+      state.audio.upload.isError = false;
+      state.audio.upload.error = null;
+    });
+    builder.addCase(uploadNewSessionRequest.fulfilled, (state, action) => {
+      state.audio.upload.isLoading = false;
+      state.audio.upload.isSuccess = true;
+      state.sessionStatus = action.payload.status; // 세션 상태 저장
+    });
+    builder.addCase(uploadNewSessionRequest.rejected, (state, action) => {
+      state.audio.upload.isLoading = false;
+      state.audio.upload.isError = true;
+      state.audio.upload.error = action.payload || action.error.message;
+    });
   },
 });
-
 export const {
   clearAudioSrc,
   closeModal,
@@ -152,5 +163,4 @@ export const {
   setNotePlaying,
   clearNotePlaying,
 } = aiConsultSlice.actions;
-
 export default aiConsultSlice.reducer;
